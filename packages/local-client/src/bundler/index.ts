@@ -26,7 +26,7 @@ const bundle = async (rawCode: string) => {
       write: false,
       plugins: [unpkgPathPlugin(), fetchPlguin(rawCode)],
       define: {
-        'process.env.NODE_ENV': 'production',
+        //'process.env.NODE_ENV': 'production',
         global: 'window',
       },
       jsxFactory: '_React.createElement',
