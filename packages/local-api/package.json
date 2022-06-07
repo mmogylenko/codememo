@@ -1,6 +1,6 @@
 {
   "name": "@codememo/local-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CodeMemo Local API",
   "publishConfig": {
     "access": "public"
@@ -26,7 +26,7 @@
     "typescript": "^4.7.3"
   },
   "dependencies": {
-    "@codememo/local-client": "^1.0.1",
+    "@codememo/local-client": "^1.0.2",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "http-proxy-middleware": "^2.0.6"
