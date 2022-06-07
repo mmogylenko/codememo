@@ -1,4 +1,5 @@
 import path from 'path';
+import open from 'open';
 import { serve } from '@codememo/local-api';
 import { Command } from 'commander';
 
@@ -10,6 +11,7 @@ export const serveCommand = new Command()
   .option('-p, --port <number>', 'port to run server on', '8080')
   .action(async (filename = 'notebook.js', options: { port: Number }) => {
     const dir = path.join(process.cwd(), path.dirname(filename));
+    const url = `http://localhost:${options.port}`;
     try {
       await serve(
         Number(options.port),
@@ -17,9 +19,9 @@ export const serveCommand = new Command()
         dir,
         !isProduction
       );
-      console.log(
-        `${filename} - to edit the file, please navigate to: http://localhost:${options.port}`
-      );
+      console.log(`Listening on \x1b[33m${url}.`);
+      // Opens the URL in the default browser.
+      await open(url);
     } catch (error: any) {
       if (error.code === 'EADDRINUSE') {
         console.error(
