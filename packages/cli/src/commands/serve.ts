@@ -9,7 +9,7 @@ export const serveCommand = new Command()
   .command('serve [filename]')
   .description('Open a file for editing')
   .option('-p, --port <number>', 'port to run server on', '8080')
-  .action(async (filename = 'notebook.js', options: { port: Number }) => {
+  .action(async (filename = 'codememo.js', options: { port: Number }) => {
     const dir = path.join(process.cwd(), path.dirname(filename));
     const url = `http://localhost:${options.port}`;
     try {
@@ -19,9 +19,10 @@ export const serveCommand = new Command()
         dir,
         !isProduction
       );
-      console.log(`Listening on \x1b[33m${url}.`);
+      console.log(`Listening on \x1b[33m${url}`);
       // Opens the URL in the default browser.
-      await open(url);
+      await open(url, { wait: true });
+      //await open(url);
     } catch (error: any) {
       if (error.code === 'EADDRINUSE') {
         console.error(

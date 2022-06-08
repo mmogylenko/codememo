@@ -2,20 +2,28 @@ import * as esbuild from 'esbuild-wasm';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlguin } from './plugins/fetch-plugin';
 
-let service = esbuild.initialize({
-  worker: true,
-  wasmURL: 'https://unpkg.com/esbuild-wasm@0.14.39/esbuild.wasm',
-});
+type Service = 'down' | 'pending' | 'up';
+
+let service: Service = 'down';
 
 const bundle = async (rawCode: string) => {
-  if (!service) {
-    try {
+  if (service !== 'up') {
+    if (service === 'pending') {
+      await new Promise((resolve, reject) => {
+        const interval = setInterval(() => {
+          if (service === 'up') {
+            clearInterval(interval);
+            resolve(true);
+          }
+        }, 100);
+      });
+    } else {
+      service = 'pending';
       await esbuild.initialize({
         worker: true,
         wasmURL: 'https://unpkg.com/esbuild-wasm@0.14.39/esbuild.wasm',
       });
-    } catch (err) {
-      console.log(err);
+      service = 'up';
     }
   }
 
