@@ -1,6 +1,6 @@
 {
   "name": "codememo",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "An interactive coding environment. You can write Javascript, import any NPM modules and see it executed, and write comprehensive documentation using markdown.",
   "publishConfig": {
     "access": "public"
@@ -22,10 +22,10 @@
   "author": "Mykola Mogylenko",
   "license": "ISC",
   "dependencies": {
-    "@codememo/local-client": "^1.0.3"
+    "@codememo/local-client": "^1.1.0"
   },
   "devDependencies": {
-    "@codememo/local-api": "^1.0.3",
+    "@codememo/local-api": "^1.1.0",
     "@types/node": "^17.0.40",
     "commander": "^9.3.0",
     "esbuild": "^0.14.42",
