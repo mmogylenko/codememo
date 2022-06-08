@@ -1,6 +1,6 @@
 import { ActionType } from '../action-types';
 import { Action } from '../actions';
-import { Cell } from '../cell';
+import { Cell } from '../models';
 import produce from 'immer';
 
 interface CellsState {

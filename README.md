@@ -28,10 +28,8 @@
 *Example*
 
 ```bash
-~ npx codememo serve demo.js
+~ npx -y codememo@latest serve
 Listening on http://localhost:8080
 ```
-
-, where *demo.js* is used to store our memos.
 
 ![codememo_demo.png](./docs/img/codememo_demo.png)

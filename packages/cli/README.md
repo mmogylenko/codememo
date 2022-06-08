@@ -34,7 +34,7 @@ _An interactive coding environment. You can write Javascript, import any NPM mod
 *Example*
 
 ```bash
-~ npx codememo serve demo.js
+~ npx -y codememo@latest serve
 Listening on http://localhost:8080
 ```
 

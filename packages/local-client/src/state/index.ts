@@ -1,4 +1,4 @@
 export * from './store';
 export * from './reducers';
-export * from './cell';
+export * from './models';
 export * as actionCreators from './action-creators';

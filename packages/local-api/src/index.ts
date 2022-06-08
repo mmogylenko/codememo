@@ -1,9 +1,20 @@
 import path from 'path';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { createCellsRouter } from './routes/cells';
+import { publicPath } from './paths';
+import { router } from './routes';
+import { File } from './storage';
+import { Page } from './models';
 
-export const serve = (
+declare global {
+  namespace Express {
+    export interface Request {
+      page: Page;
+    }
+  }
+}
+
+export const serve = async (
   port: number,
   filename: string,
   dir: string,
@@ -11,23 +22,29 @@ export const serve = (
 ) => {
   const app = express();
 
-  //app.disable('x-powered-by');
+  if (!proxy) {
+    router.use(express.static(publicPath));
+  }
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    const file = new File({
+      name: filename,
+      dir,
+    });
 
-  app.use(createCellsRouter(filename, dir));
+    req.page = new Page(file);
+    next();
+  });
+
+  app.use(router);
 
   if (proxy) {
-    app.use(
+    router.use(
       createProxyMiddleware({
         target: 'http://localhost:3000',
         ws: true,
         logLevel: 'silent',
       })
     );
-  } else {
-    const packagePath = require.resolve(
-      '@codememo/local-client/build/index.html'
-    );
-    app.use(express.static(path.dirname(packagePath)));
   }
 
   return new Promise<void>((resolve, reject) => {

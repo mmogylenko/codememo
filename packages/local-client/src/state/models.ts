@@ -5,3 +5,7 @@ export interface Cell {
   type: CellTypes;
   content: string;
 }
+
+export interface Page {
+  cells: Cell[];
+}

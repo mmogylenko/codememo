@@ -6,15 +6,15 @@ export const useCumulativeCode = (cellId: string) => {
     const orderedCells = order.map((id) => data[id]);
     const showFunctionNoop = 'var show = () => {}';
     const showFunction = `
-        import _React from 'react';
+        import * as _React from 'react';
         import _ReactDOM from 'react-dom/client';
-    
+
         var show = (value) => {
             const root = document.querySelector('#root');
             if (typeof value === 'object') {
               if('$$typeof' in value && 'props' in value) {
-                const _root = _ReactDOM.createRoot(root);
-                _root.render(value);
+                _ReactDOM.createRoot(root)
+                .render(value);
               } else {
                 root.innerHTML = JSON.stringify(value, null, 2);
               }

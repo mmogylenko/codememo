@@ -8,7 +8,7 @@ import {
   DeleteCellAction,
   InsertCellAfterAction,
 } from '../actions';
-import { Cell, CellTypes } from '../cell';
+import { Page, CellTypes } from '../models';
 import { Dispatch } from 'react';
 import { RootState } from '../reducers';
 
@@ -48,9 +48,9 @@ export const fetchCells = () => {
     dispatch({ type: ActionType.FETCH_CELLS });
 
     try {
-      const { data }: { data: Cell[] } = await axios.get('/cells');
+      const { data }: { data: Page } = await axios.get('/pages');
 
-      dispatch({ type: ActionType.FETCH_CELLS_COMPLETE, payload: data });
+      dispatch({ type: ActionType.FETCH_CELLS_COMPLETE, payload: data.cells });
     } catch (err: any) {
       dispatch({ type: ActionType.FETCH_CELLS_ERROR, payload: err.message });
     }
@@ -65,7 +65,7 @@ export const saveCells = () => {
 
     const cells = order.map((id) => data[id]);
     try {
-      await axios.post('/cells', { cells });
+      await axios.post('/pages', { cells });
     } catch (err: any) {
       dispatch({
         type: ActionType.SAVE_CELLS_ERROR,
